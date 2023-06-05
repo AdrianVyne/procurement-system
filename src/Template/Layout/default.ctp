@@ -1,23 +1,23 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         0.10.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
- * @var \App\View\AppView $this
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
 $cakeDescription = 'CakePHP: the rapid development php framework';
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,31 +28,49 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->meta('icon') ?>
 
     <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('style.css') ?>
+    <?= $this->Html->css('cake.css') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
 </head>
+
 <body>
     <nav class="top-bar expanded" data-topbar role="navigation">
         <ul class="title-area large-3 medium-4 columns">
             <li class="name">
-                <h1><a href=""><?= $this->fetch('title') ?></a></h1>
+                <h1><a href="">
+                        <?= $this->fetch('title') ?>
+                    </a></h1>
             </li>
         </ul>
-        <div class="top-bar-section">
+        <section class="top-bar-section">
             <ul class="right">
-                <li><a target="_blank" href="https://book.cakephp.org/3/">Documentation</a></li>
-                <li><a target="_blank" href="https://api.cakephp.org/3.0/">API</a></li>
+                <?php if ($loggedIn): ?>
+                    <li>
+                        <?= $this->Html->link('Logout', ['controller' => 'users', 'action' => 'logout']); ?>
+                    </li>
+                <?php else: ?>
+                    <li>
+                        <?= $this->Html->link('Register', ['controller' => 'users', 'action' => 'register']); ?>
+                    </li>
+                <?php endif; ?>
             </ul>
-        </div>
+        </section>
     </nav>
     <?= $this->Flash->render() ?>
-    <div class="container clearfix">
+    <section class="container clearfix">
         <?= $this->fetch('content') ?>
-    </div>
+    </section>
     <footer>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+
 </body>
+
 </html>

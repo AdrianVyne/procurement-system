@@ -1,16 +1,16 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link      https://cakephp.org CakePHP(tm) Project
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link      http://cakephp.org CakePHP(tm) Project
  * @since     3.0.0
- * @license   https://opensource.org/licenses/mit-license.php MIT License
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace App\Shell;
 
@@ -28,7 +28,7 @@ class ConsoleShell extends Shell
     /**
      * Start the shell and interactive console.
      *
-     * @return int|null
+     * @return int|void
      */
     public function main()
     {
@@ -42,8 +42,7 @@ class ConsoleShell extends Shell
             $this->err('');
             $this->err('<info>$ php composer.phar require --dev psy/psysh</info>');
             $this->err('');
-
-            return self::CODE_ERROR;
+            return 1;
         }
 
         $this->out("You can exit with <info>`CTRL-C`</info> or <info>`exit`</info>");
@@ -62,20 +61,19 @@ class ConsoleShell extends Shell
     /**
      * Display help for this console.
      *
-     * @return \Cake\Console\ConsoleOptionParser
+     * @return ConsoleOptionParser
      */
     public function getOptionParser()
     {
         $parser = new ConsoleOptionParser('console');
-        $parser->setDescription(
-            'This shell provides a REPL that you can use to interact with ' .
-            'your application in a command line designed to run PHP code. ' .
-            'You can use it to run adhoc queries with your models, or ' .
-            'explore the features of CakePHP and your application.' .
+        $parser->description(
+            'This shell provides a REPL that you can use to interact ' .
+            'with your application in an interactive fashion. You can use ' .
+            'it to run adhoc queries with your models, or experiment ' .
+            'and explore the features of CakePHP and your application.' .
             "\n\n" .
             'You will need to have psysh installed for this Shell to work.'
         );
-
         return $parser;
     }
 }
