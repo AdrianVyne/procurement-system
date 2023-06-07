@@ -13,7 +13,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$Description = 'Procurement System:';
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,7 +22,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <?= $cakeDescription ?>:
+        <?= $Description ?>
         <?= $this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon') ?>
@@ -30,11 +30,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('cake.css') ?>
 
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <?= $this->Html->css('bootstrap.min.css') ?>
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+
+
 
 </head>
 
@@ -53,6 +54,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     <li>
                         <?= $this->Html->link('Logout', ['controller' => 'users', 'action' => 'logout']); ?>
                     </li>
+                <?php elseif ($this->request->getParam('action') === 'register'): ?>
+                    <li>
+                        <?= $this->Html->link('Login', ['controller' => 'users', 'action' => 'login']); ?>
+                    </li>
                 <?php else: ?>
                     <li>
                         <?= $this->Html->link('Register', ['controller' => 'users', 'action' => 'register']); ?>
@@ -60,16 +65,23 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 <?php endif; ?>
             </ul>
         </section>
+
     </nav>
-    <?= $this->Flash->render() ?>
-    <section class="container clearfix">
+    <div class="text-center">
+        <h3>
+            <?= $this->Flash->render() ?>
+        </h3>
+    </div>
+    <section>
         <?= $this->fetch('content') ?>
     </section>
     <footer>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <?= $this->Html->script('jquery.min.js') ?>
+    <?= $this->Html->script('popper.min.js') ?>
+    <?= $this->Html->script('bootstrap.min.js') ?>
+    <?= $this->Html->script('test.js') ?>
 
 </body>
 

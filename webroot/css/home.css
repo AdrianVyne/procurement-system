@@ -1,24 +1,26 @@
 @font-face {
-    font-family: 'cakefont';
-    src: url('../font/cakedingbats-webfont.eot');
-    src: url('../font/cakedingbats-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../font/cakedingbats-webfont.woff2') format('woff2'),
-    url('../font/cakedingbats-webfont.woff') format('woff'),
-    url('../font/cakedingbats-webfont.ttf') format('truetype'),
-    url('../font/cakedingbats-webfont.svg#cake_dingbatsregular') format('svg');
+    font-family: "cakefont";
+    src: url("../font/cakedingbats-webfont.eot");
+    src: url("../font/cakedingbats-webfont.eot?#iefix")
+            format("embedded-opentype"),
+        url("../font/cakedingbats-webfont.woff2") format("woff2"),
+        url("../font/cakedingbats-webfont.woff") format("woff"),
+        url("../font/cakedingbats-webfont.ttf") format("truetype"),
+        url("../font/cakedingbats-webfont.svg#cake_dingbatsregular")
+            format("svg");
     font-weight: normal;
     font-style: normal;
 }
 
 .home {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 14px;
     line-height: 27px;
     color: #404041;
 }
 
 a {
-    color: #0071BC;
+    color: #0071bc;
     -webkit-transition: all 0.2s;
     -moz-transition: all 0.2s;
     -ms-transition: all 0.2s;
@@ -26,7 +28,8 @@ a {
     transition: all 0.2s;
 }
 
-a:hover, a:active {
+a:hover,
+a:active {
     color: #d33d44;
     -webkit-transition: all 0.2s;
     -moz-transition: all 0.2s;
@@ -35,7 +38,10 @@ a:hover, a:active {
     transition: all 0.2s;
 }
 
-ul, ol, dl, p {
+ul,
+ol,
+dl,
+p {
     font-size: 0.85rem;
 }
 
@@ -67,21 +73,22 @@ header .header-title {
 }
 
 header .header-title h1 {
-    font-family: 'Raleway', sans-serif;
+    font-family: "Raleway", sans-serif;
     margin: 0;
     font-style: italic;
     font-size: 18px;
     font-weight: 500;
     padding: 18px 30px;
-    color: #DEDED5;
+    color: #deded5;
 }
 
 header h1 {
     color: #fff;
 }
 
-h3, h4 {
-    font-family: 'Roboto', sans-serif;
+h3,
+h4 {
+    font-family: "Roboto", sans-serif;
     font-size: 27px;
     line-height: 30px;
     font-weight: 300;
@@ -129,7 +136,7 @@ h3, h4 {
 .alert p:before {
     color: #ffcf06;
     content: "\0055";
-    font-family: 'cakefont', sans-serif;
+    font-family: "cakefont", sans-serif;
     font-size: 21px;
     margin-left: -0.8em;
     width: 2.3em;
@@ -145,7 +152,7 @@ h3, h4 {
 }
 
 .alert.url-rewriting {
-    background-color: #F0F0F0;
+    background-color: #f0f0f0;
     border-color: #cccccc;
     display: none;
 }
@@ -163,13 +170,14 @@ li {
     padding-left: 1.8em;
 }
 
-ul li ul, ul li ul li {
+ul li ul,
+ul li ul li {
     margin: 0;
     padding: 0;
 }
 
 .bullet:before {
-    font-family: 'cakefont', sans-serif;
+    font-family: "cakefont", sans-serif;
     font-size: 18px;
     display: inline-block;
     margin-left: -1.3em;
@@ -208,11 +216,10 @@ hr {
     margin-right: 30px;
 }
 
-
 .icon {
     color: #404041;
     font-style: normal;
-    font-family: 'cakefont', sans-serif;
+    font-family: "cakefont", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }

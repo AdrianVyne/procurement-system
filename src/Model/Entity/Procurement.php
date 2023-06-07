@@ -4,19 +4,20 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Post Entity.
+ * Procurement Entity
  *
  * @property int $id
+ * @property int $organization_id
  * @property string $title
- * @property string $body
- * @property int $user_id
+ * @property string $description
+ * @property string $category
+ * @property \Cake\I18n\FrozenTime $deadline
+ * @property float $budget
+ *
  * @property \App\Model\Entity\User $user
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
  */
-class Post extends Entity
+class Procurement extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -27,7 +28,12 @@ class Post extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
-        'id' => false,
+        'organization_id' => true,
+        'title' => true,
+        'description' => true,
+        'category' => true,
+        'deadline' => true,
+        'budget' => true,
+        'user' => true,
     ];
 }
