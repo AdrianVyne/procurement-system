@@ -34,9 +34,11 @@ $Description = 'Procurement System:';
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-
-
-
+    <style>
+        body {
+            background-color: #F4F3EF;
+        }
+    </style>
 </head>
 
 <body>
