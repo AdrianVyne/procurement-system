@@ -16,8 +16,21 @@ class ProcurementsController extends AppController
 {
     public function index()
     {
-        $procurements = $this->paginate($this->Procurements);
-        $this->set(compact('procurements'));
+        $userId = $this->Auth->user('id');
+        $procurementsTable = TableRegistry::getTableLocator()->get('Procurements');
+        $procurementIds = $procurementsTable->find()
+            ->select(['id'])
+            ->where(['organization_id' => $userId])
+            ->toArray();
+        $procurementIds = array_column($procurementIds, 'id');
+        $bidsTable = TableRegistry::getTableLocator()->get('Bids');
+        $latestBids = $bidsTable->find()
+            ->contain(['Procurements', 'Users'])
+            ->where(['listing_id IN' => $procurementIds])
+            ->orderDesc('Bids.id')
+            ->limit(10)
+            ->toArray();
+        $this->set('latestBids', $latestBids);
     }
     public function post()
     {

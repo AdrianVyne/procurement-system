@@ -65,9 +65,9 @@ class UsersController extends AppController
                 $this->Auth->setUser($user);
                 // check user roles
                 if ($user['roles'] == 'vendor') {
-                    return $this->redirect(['controller' => 'Procurements', 'action' => 'index']);
-                } elseif ($user['roles'] == 'user') {
                     return $this->redirect(['controller' => 'Bids', 'action' => 'index']);
+                } elseif ($user['roles'] == 'user') {
+                    return $this->redirect(['controller' => 'Procurements', 'action' => 'index']);
                 }
             }
             $this->Flash->error('Incorrect Login');

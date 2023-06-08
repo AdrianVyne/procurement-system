@@ -53,122 +53,56 @@
                             <span class="navbar-toggler-bar bar3"></span>
                         </button>
                     </div>
-                    <a class="navbar-brand" href="#">Dashboard</a>
+                    <a class="navbar-brand" href="#">Bids Updates</a>
                 </div>
         </nav>
         <div class="content">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card card-user">
+                    <div class="card">
                         <div class="card-body">
-                            <div class="author mt-5">
-                                <h5 class="title display-3 mt-5">
-                                    asd
-                                </h5>
-                                <p class="description">
-                                    asd
-                                </p>
-                            </div>
+                            <?php if (empty($latestBids)): ?>
+                                <p>There are no bids made.</p>
+                            <?php else: ?>
+                                <?php foreach ($latestBids as $bid): ?>
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <?= h($bid->procurement->title) ?>
+                                            </h5>
+                                            <h6 class="card-subtitle mb-2 text-muted">Deadline:
+                                                <?= h($bid->procurement->deadline) ?>
+                                            </h6>
+                                            <p class="card-text">
+                                                <?= $this->Text->truncate(h($bid->procurement->description), 50, ['ellipsis' => '...']) ?>
+                                            </p>
+                                            <p class="card-text">Category:
+                                                <?= h($bid->procurement->category) ?>
+                                            </p>
+                                            <hr>
+                                            <p class="card-text">Bids:</p>
+                                            <ul class="list-group list-group-flush">
+                                                <?php foreach ($latestBids as $latestBid): ?>
+                                                    <li class="list-group-item">
+                                                        <?= h($latestBid->user->name) ?> - ₱
+                                                        <?= h($latestBid->bid_amount) ?> -
+                                                        <a
+                                                            href="<?= $this->Url->build(['controller' => 'VendorProfiles', 'action' => 'index', $vendorBid->vendor->id]) ?>">
+                                                            View Vendor Profile
+                                                        </a>
+                                                    </li>
+                                                <?php endforeach; ?>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
-                        <div class="card-footer">
-                            <hr>
-                            <div class="button-container">
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-6 col-6 ml-auto">
-                                        <h5>
-                                            asd
-                                        </h5>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
-                                        <h5>
-                                            asd
-                                        </h5>
-                                    </div>
-                                    <div class="col-lg-4 mr-auto">
-                                        <h5>
-                                            asd
-                                            <br><small>Total Budget</small>
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
-                <div class="col-lg-12">
-                    <div class="card card-user">
-                        <div class="card-body">
-                            <div class="author mt-5">
-                                <h5 class="title display-3 mt-5">
-                                    asd
-                                </h5>
-                                <p class="description">
-                                    asd
-                                </p>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <hr>
-                            <div class="button-container">
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-6 col-6 ml-auto">
-                                        <h5>
-                                            asd
-                                        </h5>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
-                                        <h5>
-                                            asd
-                                        </h5>
-                                    </div>
-                                    <div class="col-lg-4 mr-auto">
-                                        <h5>
-                                            asd
-                                            <br><small>Total Budget</small>
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="card card-user">
-                        <div class="card-body">
-                            <div class="author mt-5">
-                                <h5 class="title display-3 mt-5">
-                                    asd
-                                </h5>
-                                <p class="description">
-                                    asd
-                                </p>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <hr>
-                            <div class="button-container">
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-6 col-6 ml-auto">
-                                        <h5>
-                                            asd
-                                        </h5>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
-                                        <h5>
-                                            asd
-                                        </h5>
-                                    </div>
-                                    <div class="col-lg-4 mr-auto">
-                                        <h5>
-                                            asd
-                                            <br><small>Total Budget</small>
-                                        </h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>

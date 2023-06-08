@@ -60,126 +60,65 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title"> Simple Table</h4>
+                        <h4 class="card-title"> Bids History</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table">
-                                <thead class=" text-primary">
-                                    <th>
-                                        Name
-                                    </th>
-                                    <th>
-                                        Country
-                                    </th>
-                                    <th>
-                                        City
-                                    </th>
-                                    <th class="text-right">
-                                        Salary
-                                    </th>
+                            <?= $this->Form->create(null, ['type' => 'get']) ?>
+                            <?= $this->Form->input('search', ['label' => 'Search Title']) ?>
+                            <?= $this->Form->submit('Search') ?>
+                            <?= $this->Form->end() ?>
+                            <table width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <?= $this->Paginator->sort('title', 'Title') ?>
+                                        </th>
+                                        <th>
+                                            <?= $this->Paginator->sort('bid_amount', 'Bid Amount') ?>
+                                        </th>
+                                        <th>
+                                            <?= $this->Paginator->sort('status', 'Status') ?>
+                                        </th>
+                                        <th>Action</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Niger
-                                        </td>
-                                        <td>
-                                            Oud-Turnhout
-                                        </td>
-                                        <td class="text-right">
-                                            $36,738
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Minerva Hooper
-                                        </td>
-                                        <td>
-                                            Curaçao
-                                        </td>
-                                        <td>
-                                            Sinaai-Waas
-                                        </td>
-                                        <td class="text-right">
-                                            $23,789
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Sage Rodriguez
-                                        </td>
-                                        <td>
-                                            Netherlands
-                                        </td>
-                                        <td>
-                                            Baileux
-                                        </td>
-                                        <td class="text-right">
-                                            $56,142
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Philip Chaney
-                                        </td>
-                                        <td>
-                                            Korea, South
-                                        </td>
-                                        <td>
-                                            Overland Park
-                                        </td>
-                                        <td class="text-right">
-                                            $38,735
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Doris Greene
-                                        </td>
-                                        <td>
-                                            Malawi
-                                        </td>
-                                        <td>
-                                            Feldkirchen in Kärnten
-                                        </td>
-                                        <td class="text-right">
-                                            $63,542
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Mason Porter
-                                        </td>
-                                        <td>
-                                            Chile
-                                        </td>
-                                        <td>
-                                            Gloucester
-                                        </td>
-                                        <td class="text-right">
-                                            $78,615
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Jon Porter
-                                        </td>
-                                        <td>
-                                            Portugal
-                                        </td>
-                                        <td>
-                                            Gloucester
-                                        </td>
-                                        <td class="text-right">
-                                            $98,615
-                                        </td>
-                                    </tr>
+                                    <?php foreach ($bids as $bid): ?>
+                                        <tr>
+                                            <td>
+                                                <?= h($bid->procurement->title) ?>
+                                            </td>
+                                            <td>
+                                                <?php if ($bid->editMode): ?>
+                                                    <?= $this->Form->create($bid, ['url' => ['action' => 'updateBid', $bid->id]]) ?>
+                                                    <?= $this->Form->control('bid_amount', ['value' => $bid->bid_amount, 'class' => 'form-control', 'style' => 'max-width: 150px;']) ?>
+                                                    <?= $this->Form->button('Update', ['class' => 'btn btn-primary']) ?>
+                                                    <?= $this->Form->end() ?>
+                                                <?php else: ?>
+                                                    <?= h($bid->bid_amount) ?>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <?= h($bid->status) ?>
+                                            </td>
+                                            <td>
+                                                <div class="my-4">
+                                                    <?php if ($bid->editMode): ?>
+                                                        <?= $this->Html->link('Cancel', ['action' => 'cancelEdit', $bid->id], ['class' => 'btn btn-secondary']) ?>
+                                                    <?php else: ?>
+                                                        <?= $this->Html->link('Edit', ['action' => 'editBid', $bid->id], ['class' => 'btn btn-primary']) ?>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="my-4">
+                                                    <?= $this->Html->link('Delete', ['action' => 'deleteBid', $bid->id], ['class' => 'btn btn-danger', 'confirm' => 'Are you sure you want to delete this bid?']) ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
+                            <?= $this->Paginator->numbers() ?>
                         </div>
                     </div>
                 </div>
