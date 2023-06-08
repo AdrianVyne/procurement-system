@@ -28,8 +28,8 @@
                         <p>Bids History</p>
                     </a>
                 </li>
-                <li>
-                    <a href="<?= $this->Url->build(['controller' => 'Bids', 'action' => 'postings']) ?>">
+                <li class="active">
+                    <a href=" <?= $this->Url->build(['controller' => 'Bids', 'action' => 'postings']) ?>">
                         <p>Find Procurement Posts</p>
                     </a>
                 </li>
@@ -38,7 +38,6 @@
                         <p>Vendor Profile</p>
                     </a>
                 </li>
-
             </ul>
         </div>
     </div>
@@ -67,7 +66,6 @@
                 </div>
             </div>
             <?= $this->Form->end() ?>
-
             <?php if ($procurements->isEmpty()): ?>
                 <p>No listings found.</p>
             <?php else: ?>
@@ -109,10 +107,8 @@
                                 </div>
                             </div>
                         </div>
-
                     <?php endforeach; ?>
                 </div>
-
                 <div class="paginator">
                     <ul class="pagination">
                         <?= $this->Paginator->prev('< ' . __('previous')) ?>

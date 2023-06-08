@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use App\Model\Table\VendorProfilesTable;
+use Cake\ORM\TableRegistry;
 
 /**
  * Users Controller
@@ -63,7 +65,6 @@ class UsersController extends AppController
             $user = $this->Auth->identify();
             if ($user) {
                 $this->Auth->setUser($user);
-                // check user roles
                 if ($user['roles'] == 'vendor') {
                     return $this->redirect(['controller' => 'Bids', 'action' => 'index']);
                 } elseif ($user['roles'] == 'user') {
@@ -81,17 +82,32 @@ class UsersController extends AppController
     public function register()
     {
         $user = $this->Users->newEntity();
+
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+
             if ($this->Users->save($user)) {
-                $this->Flash->success('You are registered and can login');
-                return $this->redirect(['action' => 'login']);
+                $userId = $user->id;
+                if ($this->request->getData('roles') === 'vendor') {
+                    $vendorProfilesTable = TableRegistry::getTableLocator()->get('VendorProfiles');
+                    $vendorProfile = $vendorProfilesTable->newEntity();
+                    $vendorProfile->user_id = $userId;
+                    if ($vendorProfilesTable->save($vendorProfile)) {
+                        $this->Flash->success('You are registered as a vendor and can login');
+                        return $this->redirect(['action' => 'login']);
+                    } else {
+                        $this->Flash->error('Failed to create vendor profile');
+                    }
+                } else {
+                    $this->Flash->success('You are registered and can login');
+                    return $this->redirect(['action' => 'login']);
+                }
             } else {
                 $this->Flash->error('You are not registered');
             }
         }
         $this->set(compact('user'));
-        $this->set('_serialzie', ['user']);
+        $this->set('_serialize', ['user']);
     }
     public function beforeFilter(Event $event)
     {

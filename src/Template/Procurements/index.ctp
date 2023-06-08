@@ -87,22 +87,19 @@
                                                         <?= h($latestBid->user->name) ?> - ₱
                                                         <?= h($latestBid->bid_amount) ?> -
                                                         <a
-                                                            href="<?= $this->Url->build(['controller' => 'VendorProfiles', 'action' => 'index', $vendorBid->vendor->id]) ?>">
+                                                            href="<?= $this->Url->build(['controller' => 'VendorProfiles', 'action' => 'index', $bid->vendor_id]) ?>">
                                                             View Vendor Profile
                                                         </a>
                                                     </li>
                                                 <?php endforeach; ?>
-
                                             </ul>
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </div>
-
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

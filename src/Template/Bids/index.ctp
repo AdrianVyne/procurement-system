@@ -38,7 +38,6 @@
                         <p>Vendor Profile</p>
                     </a>
                 </li>
-
             </ul>
         </div>
     </div>
@@ -57,8 +56,44 @@
                 </div>
         </nav>
         <div class="content">
-            content here
-            <button id="myButton">Click Me</button>
+            <?php if (empty($bids)): ?>
+                <p>No updates found.</p>
+            <?php else: ?>
+                <div class="row">
+                    <?php foreach ($bids as $bid): ?>
+                        <div class="col-md-12 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <?= h($bid->procurement->title) ?>
+                                    </h5>
+                                    <p class="card-text">
+                                        <?= nl2br(h(mb_strimwidth($bid->procurement->description, 0, 50, '...'))) ?>
+                                    </p>
+                                    <p class="card-text">Category:
+                                        <?= h($bid->procurement->category) ?>
+                                    </p>
+                                    <p class="card-text">Deadline:
+                                        <?= h($bid->procurement->deadline->format('Y-m-d H:i:s')) ?>
+                                    </p>
+                                    <p class="card-text">Status:
+                                        <?= h($bid->status) ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <div class="paginator">
+                    <ul class="pagination">
+                        <?= $this->Paginator->prev('< ' . __('previous')) ?>
+                        <?= $this->Paginator->numbers() ?>
+                        <?= $this->Paginator->next(__('next') . ' >') ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+
         </div>
     </div>
 </div>

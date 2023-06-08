@@ -9,6 +9,9 @@ use Cake\ORM\Query;
 use Cake\Utility\Text;
 use Cake\Datasource\ResultSetInterface;
 use Cake\Event\EventInterface;
+use App\Model\Table\VendorProfilesTable;
+use Cake\Controller\Component\PaginatorComponent;
+
 
 
 
@@ -25,13 +28,18 @@ class BidsController extends AppController
         parent::initialize();
         $this->loadComponent('Paginator');
         $this->loadModel('Procurements');
-
     }
     public function index()
     {
-        $bids = $this->paginate($this->Bids);
-
-        $this->set(compact('bids'));
+        $loggedInUserId = $this->Auth->user('id');
+        $this->paginate = [
+            'limit' => 10,
+            'order' => ['Bids.id' => 'DESC'],
+            'contain' => ['Procurements'],
+            'conditions' => ['Bids.vendor_id' => $loggedInUserId]
+        ];
+        $bids = $this->paginate($this->Bids)->toArray();
+        $this->set('bids', $bids);
     }
     public function history()
     {
@@ -39,7 +47,6 @@ class BidsController extends AppController
             'limit' => 10,
             'order' => ['Bids.created' => 'DESC'],
         ];
-
         $query = $this->Bids->find()
             ->contain(['Procurements'])
             ->where(['Bids.vendor_id' => $this->Auth->user('id')]);
@@ -50,26 +57,19 @@ class BidsController extends AppController
                 return $q->where(['Procurements.title LIKE' => "%{$search}%"]);
             });
         }
-
         $bids = $this->paginate($query);
-
         $this->set(compact('bids', 'search'));
     }
     public function postings()
     {
-
         $this->loadModel('Bids');
-
         $userId = $this->Auth->user('id');
-
         $this->paginate = [
             'limit' => 10,
             'order' => ['Procurements.id' => 'DESC'],
         ];
-
         $query = $this->Procurements->find()
             ->contain(['Users']);
-
         $search = $this->getRequest()->getQuery('search');
         if (!empty($search)) {
             $query->where([
@@ -87,7 +87,6 @@ class BidsController extends AppController
             $hasBid = $bidsTable->exists(['listing_id' => $procurement->id, 'vendor_id' => $userId]);
             $procurement->hasBid = $hasBid;
         }
-
         $this->set(compact('procurements', 'search'));
     }
     public function profile()
@@ -96,6 +95,11 @@ class BidsController extends AppController
         $usersTable = TableRegistry::getTableLocator()->get('Users');
         $bidsTable = TableRegistry::getTableLocator()->get('Bids');
         $procurementsTable = TableRegistry::getTableLocator()->get('Procurements');
+        $vendorProfilesTable = TableRegistry::getTableLocator()->get('VendorProfiles');
+        $vendorProfile = $vendorProfilesTable->find()
+            ->where(['user_id' => $loggedInUserID])
+            ->first();
+
         $user = $usersTable->get($loggedInUserID);
         $totalBids = $bidsTable->find()->where(['vendor_id' => $loggedInUserID])->count();
         $totalProcurements = $procurementsTable->find()->where(['organization_id' => $loggedInUserID])->count();
@@ -113,7 +117,7 @@ class BidsController extends AppController
                 $this->Flash->error('Unable to update profile. Please try again.');
             }
         }
-        $this->set(compact('user', 'totalBids', 'totalProcurements', 'totalBudget'));
+        $this->set(compact('user', 'totalBids', 'totalProcurements', 'totalBudget', 'vendorProfile'));
     }
     public function add() //add bid
     {

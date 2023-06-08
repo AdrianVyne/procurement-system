@@ -5,6 +5,7 @@ use Cake\ORM\TableRegistry;
 use App\Controller\AppController;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\UnauthorizedException;
+use App\Model\Entity\VendorProfile;
 
 /**
  * Procurements Controller

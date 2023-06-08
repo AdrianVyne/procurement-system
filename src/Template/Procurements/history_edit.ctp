@@ -38,7 +38,6 @@
                         <p>Organization Profile</p>
                     </a>
                 </li>
-
             </ul>
         </div>
     </div>
