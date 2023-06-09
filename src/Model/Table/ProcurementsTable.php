@@ -40,6 +40,9 @@ class ProcurementsTable extends Table
             'foreignKey' => 'organization_id',
             'joinType' => 'INNER',
         ]);
+        $this->hasMany('Bids', [
+            'foreignKey' => 'listing_id',
+        ]);
     }
 
     /**
@@ -72,9 +75,9 @@ class ProcurementsTable extends Table
             ->notEmptyString('category');
 
         $validator
-            ->dateTime('deadline')
+            ->date('deadline', 'ymd')
             ->requirePresence('deadline', 'create')
-            ->notEmptyDateTime('deadline');
+            ->notEmptyDateTime('deadline', 'Please enter a valid deadline.');
 
         $validator
             ->decimal('budget')

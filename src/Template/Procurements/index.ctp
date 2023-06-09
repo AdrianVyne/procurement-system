@@ -82,12 +82,12 @@
                                             <hr>
                                             <p class="card-text">Bids:</p>
                                             <ul class="list-group list-group-flush">
-                                                <?php foreach ($latestBids as $latestBid): ?>
+                                                <?php foreach ($bid->procurement->bids as $latestBid): ?>
                                                     <li class="list-group-item">
-                                                        <?= h($latestBid->user->name) ?> - ₱
+                                                        <?= h($bid->user->name) ?> - ₱
                                                         <?= h($latestBid->bid_amount) ?> -
                                                         <a
-                                                            href="<?= $this->Url->build(['controller' => 'VendorProfiles', 'action' => 'index', $bid->vendor_id]) ?>">
+                                                            href="<?= $this->Url->build(['controller' => 'VendorProfiles', 'action' => 'index', $latestBid->vendor_id]) ?>">
                                                             View Vendor Profile
                                                         </a>
                                                     </li>
@@ -96,8 +96,11 @@
                                         </div>
                                     </div>
                                 <?php endforeach; ?>
+
+
                             <?php endif; ?>
                         </div>
+
                     </div>
                 </div>
             </div>

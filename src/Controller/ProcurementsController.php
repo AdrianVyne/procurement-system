@@ -6,6 +6,8 @@ use App\Controller\AppController;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\UnauthorizedException;
 use App\Model\Entity\VendorProfile;
+use Cake\I18n\Time;
+use DateTime;
 
 /**
  * Procurements Controller
@@ -26,8 +28,15 @@ class ProcurementsController extends AppController
         $procurementIds = array_column($procurementIds, 'id');
         $bidsTable = TableRegistry::getTableLocator()->get('Bids');
         $latestBids = $bidsTable->find()
-            ->contain(['Procurements', 'Users'])
-            ->where(['listing_id IN' => $procurementIds])
+            ->contain([
+                'Procurements',
+                'Procurements.Bids' => function ($q) use ($procurementIds) {
+                    return $q->where(['Bids.listing_id IN' => $procurementIds]);
+                },
+                'Users' => function ($q) {
+                    return $q->select(['id', 'name']);
+                }
+            ])
             ->orderDesc('Bids.id')
             ->limit(10)
             ->toArray();
@@ -35,20 +44,22 @@ class ProcurementsController extends AppController
     }
     public function post()
     {
-        $procurement = $this->Procurements->newEntity();
-        if ($this->request->is('post')) {
+        if ($this->request->is('post') && !empty($this->request->getData())) {
             $requestData = $this->request->getData();
-            $userId = $this->Auth->user('id');
-            if (!$userId) {
-                throw new UnauthorizedException('User not logged in');
-            }
-            $requestData['organization_id'] = $userId;
-            $procurement = $this->Procurements->patchEntity($procurement, $requestData);
+
+            $deadline = new DateTime($requestData['deadline']['year'] . '-' . $requestData['deadline']['month'] . '-' . $requestData['deadline']['day']);
+            $requestData['deadline'] = $deadline->format('Y-m-d');
+
+            $procurement = $this->Procurements->newEntity($requestData);
+            $procurement->organization_id = $this->Auth->user('id');
+
             if ($this->Procurements->save($procurement)) {
-                $this->Flash->success('Procurement has been added successfully.');
+                $this->Flash->success('Procurement added successfully.');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('Unable to add procurement. Please, try again.');
+                $this->Flash->error('Failed to add procurement. Please check the form for errors.');
+                $errors = $procurement->getErrors();
+                debug($errors); // Print validation errors to debug
             }
         }
         $this->set(compact('procurement'));
